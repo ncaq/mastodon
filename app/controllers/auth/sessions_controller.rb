@@ -15,6 +15,11 @@ class Auth::SessionsController < Devise::SessionsController
     end
   end
 
+  def new
+    resource.build_account
+    super
+  end
+
   def destroy
     super
     flash[:notice] = nil
