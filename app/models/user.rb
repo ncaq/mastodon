@@ -28,4 +28,14 @@ class User < ApplicationRecord
   def setting_auto_play_gif
     settings.auto_play_gif
   end
+
+  def username=(u)
+    self.account.username = u
+  end
+
+  def username
+    self.account.username
+  end
+
+  attr_accessor :username
 end

@@ -15,11 +15,6 @@ class Auth::SessionsController < Devise::SessionsController
     end
   end
 
-  def new
-    resource.build_account
-    super
-  end
-
   def destroy
     super
     flash[:notice] = nil
@@ -30,17 +25,13 @@ class Auth::SessionsController < Devise::SessionsController
   def find_user
     if session[:otp_user_id]
       User.find(session[:otp_user_id])
-    elsif account_params[:username]
-      Account.find_by(username: account_params[:username]).try(:user)
+    elsif user_params[:username]
+      Account.find_by(username: user_params[:username]).try(:user)
     end
   end
 
   def user_params
-    params.require(:user).permit(:password, :otp_attempt)
-  end
-
-  def account_params
-    params.require(:account).permit(:username)
+    params.require(:user).permit(:username, :password, :otp_attempt)
   end
 
   def after_sign_in_path_for(_resource)
