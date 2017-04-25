@@ -1,18 +1,11 @@
 - content_for :page_title do
   = t('auth.login')
 
-= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  = render 'shared/error_messages', object: resource
-
-  = f.simple_fields_for :account do |account_fields|
-    = account_fields.input :username,
-      autofocus: true,
-      placeholder: t('simple_form.labels.defaults.username'),
-      required: true,
-      input_html: { 'aria-label' => t('simple_form.labels.defaults.username') }
-
+= simple_form_for(:login, url: session_path(resource_name)) do |f|
+  = f.input :username, autofocus: true, placeholder: 'username', required: true
   = f.input :password, placeholder: t('simple_form.labels.defaults.password'), required: true, input_html: { 'aria-label' => t('simple_form.labels.defaults.password') }
 
-  = f.button :button, t('auth.login'), type: :submit
+  .actions
+    = f.button :button, t('auth.login'), type: :submit
 
 .form-footer= render "auth/shared/links"
