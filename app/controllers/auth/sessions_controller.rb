@@ -25,7 +25,7 @@ class Auth::SessionsController < Devise::SessionsController
   def find_user
     if session[:otp_user_id]
       User.find(session[:otp_user_id])
-    elsif user_params[:account_attributes][:username]
+    elsif user_params[:account_attributes] && user_params[:account_attributes][:username]
       Account.find_by(username: user_params[:account_attributes][:username]).user
     end
   end
