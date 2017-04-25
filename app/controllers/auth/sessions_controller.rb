@@ -25,13 +25,13 @@ class Auth::SessionsController < Devise::SessionsController
   def find_user
     if session[:otp_user_id]
       User.find(session[:otp_user_id])
-    elsif user_params[:email]
-      User.find_by(email: user_params[:email])
+    elsif user_params[:account_attributes][:username]
+      Account.find_by(username: user_params[:account_attributes][:username]).user
     end
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :otp_attempt)
+    params.permit({ account_attributes: [:username] }, :password, :otp_attempt)
   end
 
   def after_sign_in_path_for(_resource)

@@ -4,7 +4,7 @@ class User < ApplicationRecord
   include Settings::Extend
 
   devise :registerable, :recoverable,
-         :rememberable, :trackable, :validatable, :confirmable,
+         :rememberable, :trackable, :validatable,
          :two_factor_authenticatable, :two_factor_backupable,
          otp_secret_encryption_key: ENV['OTP_SECRET'],
          otp_number_of_backup_codes: 10
@@ -13,7 +13,6 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :account
 
   validates :locale, inclusion: I18n.available_locales.map(&:to_s), unless: 'locale.nil?'
-  validates :email, email: true
 
   scope :recent,    -> { order('id desc') }
   scope :admins,    -> { where(admin: true) }
