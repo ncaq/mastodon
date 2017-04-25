@@ -1,8 +1,9 @@
 - content_for :page_title do
   = t('auth.login')
 
-= simple_form_for(:login, url: session_path(resource_name)) do |f|
-  = f.input :username, autofocus: true, placeholder: 'username', required: true
+= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+  = f.simple_fields_for :account do |ff|
+    = ff.input :username, autofocus: true, placeholder: t('simple_form.labels.defaults.username'), required: true, input_html: { 'aria-label' => t('simple_form.labels.defaults.username') }
   = f.input :password, placeholder: t('simple_form.labels.defaults.password'), required: true, input_html: { 'aria-label' => t('simple_form.labels.defaults.password') }
 
   .actions
